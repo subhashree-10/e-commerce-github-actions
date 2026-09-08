@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shoply — Simple E-Commerce</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --dark: #111827;
+      --muted: #6b7280;
+      --light: #f8fafc;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: var(--dark);
+      background: var(--light);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      color: #374151;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .cart {
+      border: 0;
+      background: #eff6ff;
+      color: var(--accent-dark);
+      padding: 10px 15px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 72px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 56px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.7rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      max-width: 650px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 550px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: white;
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: #cbd5e1;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 22px 50px rgba(15, 23, 42, 0.14);
+    }
+
+    /* Section */
+    section {
+      padding: 56px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 26px;
+    }
+
+    .section-head h2 {
+      font-size: 2rem;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    /* Products */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 17px;
+    }
+
+    .category {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .card h3 {
+      margin: 6px 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .price {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .add {
+      border: 0;
+      background: var(--dark);
+      color: white;
+      border-radius: 8px;
+      padding: 8px 11px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .add:hover {
+      background: #374151;
+    }
+
+    /* Promo */
+    .promo {
+      background: var(--dark);
+      color: white;
+      border-radius: 22px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .promo p {
+      color: #cbd5e1;
+      margin-top: 7px;
+    }
+
+    .promo .btn {
+      background: white;
+      color: var(--dark);
+      white-space: nowrap;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 56px;
+      border-top: 1px solid var(--border);
+      background: white;
+    }
+
+    .footer-inner {
+      padding: 30px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hero-image {
+        height: 360px;
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding-top: 46px;
+      }
+
+      .hero-image {
+        height: 280px;
+      }
+
+      section {
+        padding: 40px 0;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head,
+      .promo,
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .promo {
+        padding: 28px;
+      }
+
+      .card img {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">Shop<span>ly</span></a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#shop">Shop</a>
+        <a href="#new">New Arrivals</a>
+        <a href="#deals">Deals</a>
+      </nav>
+
+      <button class="cart" onclick="showCart()">Cart (<span id="cart-count">0</span>)</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Modern essentials</div>
+          <h1>Simple products. Better everyday.</h1>
+          <p>
+            Discover thoughtfully selected fashion, accessories, and lifestyle
+            essentials designed to fit effortlessly into your day.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#shop">Shop collection</a>
+            <a class="btn btn-secondary" href="#new">Explore new arrivals</a>
+          </div>
+        </div>
+
+        <img
+          class="hero-image"
+          src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1000&q=80"
+          alt="Modern clothing store interior"
+        />
+      </div>
+    </section>
+
+    <section id="shop">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Featured</div>
+            <h2>Popular right now</h2>
+          </div>
+          <p>Clean designs and everyday pieces selected for a modern wardrobe.</p>
+        </div>
+
+        <div class="products">
+          <article class="card">
+            <img
+              src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=80"
+              alt="Minimal fashion outfit"
+            />
+            <div class="card-body">
+              <div class="category">Fashion</div>
+              <h3>Minimal Everyday Outfit</h3>
+              <div class="price-row">
+                <span class="price">$89</span>
+                <button class="add" onclick="addToCart()">Add</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img
+              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"
+              alt="White and red sneakers"
+            />
+            <div class="card-body">
+              <div class="category">Footwear</div>
+              <h3>Classic Street Sneakers</h3>
+              <div class="price-row">
+                <span class="price">$120</span>
+                <button class="add" onclick="addToCart()">Add</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img
+              src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80"
+              alt="Classic wrist watch"
+            />
+            <div class="card-body">
+              <div class="category">Accessories</div>
+              <h3>Classic Wrist Watch</h3>
+              <div class="price-row">
+                <span class="price">$149</span>
+                <button class="add" onclick="addToCart()">Add</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img
+              src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80"
+              alt="Black sunglasses"
+            />
+            <div class="card-body">
+              <div class="category">Accessories</div>
+              <h3>Everyday Sunglasses</h3>
+              <div class="price-row">
+                <span class="price">$59</span>
+                <button class="add" onclick="addToCart()">Add</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="new">
+      <div class="container">
+        <div class="promo" id="deals">
+          <div>
+            <div class="eyebrow" style="color:#93c5fd;">Limited offer</div>
+            <h2>Get 20% off your first order.</h2>
+            <p>Use code <strong>WELCOME20</strong> at checkout.</p>
+          </div>
+          <a class="btn" href="#shop">Start shopping</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 Shoply. All rights reserved.</div>
+      <div>Simple storefront demo</div>
+    </div>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+
+    function addToCart() {
+      cartCount++;
+      document.getElementById("cart-count").textContent = cartCount;
+    }
+
+    function showCart() {
+      alert(
+        cartCount === 0
+          ? "Your cart is empty."
+          : `You have ${cartCount} item${cartCount > 1 ? "s" : ""} in your cart.`
+      );
+    }
+  </script>
+</body>
+</html>
