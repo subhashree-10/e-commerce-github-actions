@@ -30,4 +30,4 @@ jobs:
     steps:
       - name: Deploy the app on server
         run: echo "Application Deployed"
-      - 
+      
