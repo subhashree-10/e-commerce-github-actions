@@ -10,31 +10,29 @@ on:
 
 # required permissons for the workflow
 permissions:
+  contents: read
   pages: write
   id-token: write
-  contents: read
 
 jobs:
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup GitHub Pages Configuration
-        id: pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v4
         with:
           path: '.' # Location of your static files
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
