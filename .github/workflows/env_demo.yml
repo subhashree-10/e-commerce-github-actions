@@ -6,8 +6,7 @@ on:
 
 env:
   NAME: Subhashree
-
- jobs:
+jobs:
   show_env:
    runs-on: ubuntu-latest
    steps:
