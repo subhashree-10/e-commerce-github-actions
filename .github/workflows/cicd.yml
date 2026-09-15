@@ -1,33 +1,51 @@
-# goal: To build CI/CD pipeline (just dumy)
+# Goal: To build a CI/CD pipeline (dummy/demo)
+
 name: CICD Demo
 
+# Workflow runs whenever code is pushed
 on:
   push:
 
 jobs:
- #CI
+
+  # ====================
+  # CI - Continuous Integration
+  # ====================
+
   code:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Clone the code
-       run: echo "Code Cloned"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone the code
+        run: echo "Code Cloned"
+
+
   build:
     needs: code
     runs-on: ubuntu-latest
+
     steps:
       - name: Build the code with Docker
         run: echo "Code Built"
+
+
   test:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
-     - name: Test the Application
-       run: echo "Test passed"
-  #CD
+      - name: Test the Application
+        run: echo "Test passed"
+
+
+  # ====================
+  # CD - Continuous Deployment
+  # ====================
+
   deploy:
-    needs: [code,build,test]
+    needs: [code, build, test]
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy the app on server
         run: echo "Application Deployed"
-      
