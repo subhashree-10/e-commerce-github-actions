@@ -3,21 +3,23 @@
 name: Code Lint
 
 on:
-     push:
+  push:
 
 jobs:
-    code-linter:
-        runs-on: ubuntu-latest
-        steps:
-           - name: Code Checkout
-             uses: actions/Checkout@v7
-             
-           - name: Setup python
-             uses: actions/Setup-python@v7
-             with:
-                python-version: '3.13'
+  code-linter:
+    runs-on: ubuntu-latest
 
-           - name: Install Dependencies
-             run: pip Install -r requirements.txt
-           - name: Code Lint
-             run: ruff check .
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Code Lint
+        run: ruff check .
