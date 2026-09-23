@@ -6,6 +6,7 @@ name: "Hello workflow"
 # when the workflow runs
 on:
  push: 
+Workflow_dispatch:
 
 # what the workflow does
 jobs:
