@@ -4,7 +4,7 @@ name: Code Lint
 
 on:
   push:
-  
+Workflow_dispatch: 
 jobs:
   code-linter-and-test:
     strategy:
