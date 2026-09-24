@@ -1,5 +1,3 @@
-# Goal: To build and push the docker image
-
 name: Docker Build and Push
 
 on:
@@ -19,7 +17,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v4
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and Push Docker Image
@@ -27,4 +25,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/e-com-python:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/e-com-python:latest
