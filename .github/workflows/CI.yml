@@ -10,5 +10,5 @@ jobs:
         uses: ./.github/workflows/lint_and_test.yml
 
     build-an-push:
-        needs: code_lint
+        needs: code-lint
         uses: ./.github/workflows/docker.yml
