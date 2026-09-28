@@ -1,0 +1,33 @@
+# Goal: To build a CI/CD pipeline (dummy/demo)
+
+name: CICD Demo
+
+# Workflow runs whenever code is pushed
+on:
+  push:
+
+jobs:
+
+  # ====================
+  # CI - Continuous Integration
+  # ====================
+
+  code:
+      uses: ./.github/workflow/lint_and_test.yml
+
+
+  build-and-push:
+      secrets: inherit
+      needs: code
+      uses: ./.github/workflows/docker.yml
+
+
+  # ====================
+  # CD - Continuous Deployment
+  # ====================
+
+  deploy:
+    secrets: inherit
+    needs: [code,build-and-push]
+    uses: ./.github/workflow/cd.yml
+
