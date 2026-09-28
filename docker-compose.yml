@@ -1,0 +1,7 @@
+
+services:
+  app:
+    image: subhashree1020/e-com-python:latest
+    ports:
+      - "80:8000" # Maps http://localhost:80 on your host to port 8000 in Flask
+    restart: always
