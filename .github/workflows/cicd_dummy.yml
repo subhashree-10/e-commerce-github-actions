@@ -4,8 +4,7 @@ name: CICD Demo
 
 # Workflow runs whenever code is pushed
 on:
-  push:
-
+  workflow_dispatch:
 jobs:
 
   # ====================
